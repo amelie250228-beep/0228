@@ -2,13 +2,12 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>🚽 공포 똥 피하기 🚽</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> 똥을 피하고 돈을 먹자 </title>
 <style>
 body{
     margin:0;
-    overflow:hidden;
-    background: radial-gradient(circle, #400000, #000000);
+    background: radial-gradient(circle, #4bbbdd, #ffffff);
     font-family:sans-serif;
     text-align:center;
     color:white;
@@ -16,8 +15,8 @@ body{
 }
 h1{
     margin:10px;
-    color:#ff4444;
-    text-shadow:0 0 10px red;
+    color:#2299ff; /* 💡 제목 색상을 파란색으로 변경 */
+    text-shadow:0 0 10px #0055ff; /* 💡 그림자 효과도 파란색으로 변경 */
     font-size:24px;
 }
 #game{
@@ -25,11 +24,36 @@ h1{
     height:80vh;
     position:relative;
     overflow:hidden;
-    border-top:3px solid red;
-    border-bottom:3px solid red;
-    background: linear-gradient(rgba(255,0,0,0.05), rgba(0,0,0,0.2));
+    border-top:3px solid #0055ff; /* 💡 위쪽 선을 파란색으로 변경 */
+    border-bottom:3px solid #0055ff; /* 💡 아래쪽 선을 파란색으로 변경 */
+    background: linear-gradient(rgba(0,85,255,0.05), rgba(0,0,0,0.2)); /* 배경 광원도 은은한 푸른빛으로 보정 */
     cursor: default; 
 }
+
+#ui-layer {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+    padding: 0 20px;
+    box-sizing: border-box;
+    z-index: 5; 
+    pointer-events: none; 
+}
+#hearts{
+    font-size:28px;
+    color:red;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+#goldText{
+    font-size:22px;
+    color:gold;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(0,0,0,0.8);
+}
+
 #player{
     position:absolute;
     bottom:20px;
@@ -43,24 +67,21 @@ h1{
     font-size:50px;
     pointer-events:none;
 }
+#player img{
+    width:60px;
+    height:60px;
+}
+
 .item{
     position:absolute;
-    font-size:32px;
+    width:40px;
+    height:40px;
 }
-#hearts{
-    margin-top:10px;
-    font-size:28px;
-    color:red;
-}
-#score{
-    margin-top:10px;
-    font-size:22px;
-    color:#ff8888;
-}
-#goldText{
-    margin-top:5px;
-    font-size:18px;
-    color:gold;
+
+.item img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
 }
 #startScreen{
     position:absolute;
@@ -94,8 +115,8 @@ h1{
 #rankingContent{
     width:300px;
     margin:auto;
-    background:rgba(20,0,0,0.9);
-    border:2px solid red;
+    background:rgba(0,20,50,0.9); /* 랭킹창 배경도 푸른빛이 도는 어두운색으로 변경 */
+    border:2px solid #0055ff; /* 랭킹창 테두리 파란색으로 변경 */
     border-radius:15px;
     padding:20px;
 }
@@ -106,44 +127,59 @@ h1{
     font-size:18px;
     border:none;
     border-radius:10px;
-    background:#aa0000;
+    background:#0044cc; /* 💡 다시 시작 버튼 파란색으로 변경 */
     color:white;
     cursor:pointer;
 }
 #restartBtn:hover{
-    background:#ff0000;
+    background:#0066ff;
 }
 </style>
 </head>
 <body>
-<img
-src="https://www.hitwebcounter.com/counter/counter.php?page=21500723&style=0041&nbdigits=5&type=page"
-style="width:140px; height:auto;"
-/>
-<h1>🚽 공포 똥 피하기 🚽</h1>
+
+<h1> 똥을 피하고 돈을 먹자 </h1>
 
 <div id="game">
-    <div id="player">🚽</div>
+    <div id="ui-layer">
+        <div id="hearts">❤️❤️❤️</div>
+        <div id="goldText">골드 : 0 / 100</div>
+    </div>
+
+    <div id="player">
+        <img src="trashbin.png" width="60" height="60"> </div>
     <div id="startScreen">
         <div>화면 클릭 / 터치해서 시작</div>
-        <div id="small">💩을 피하고 🪙을 먹어라...</div>
+        <div id="small"> 똥을 피하고 돈을 먹자 </div>
     </div>
     <div id="rankingBox">
         <div id="rankingContent">
-            <h2>☠️ 게임 오버 ☠️</h2>
+            <h2>당신은 똥을 맞았습니다.</h2>
             <div id="finalScore"></div>
-            <h3>🏆 전체 랭킹</h3>
-            <ol id="allRanking"><li>Firebase 연결 필요</li></ol>
-            <h3>🔥 오늘의 랭킹</h3>
-            <ol id="todayRanking"><li>Firebase 연결 필요</li></ol>
+            <h3>명예의 전당(전체 랭킹)</h3>
+            <ol id="allRanking"><li>불러오는 중...</li></ol>
+            <h3>똥 잘 피한 사람(오늘의 랭킹)</h3>
+            <ol id="todayRanking"><li>불러오는 중...</li></ol>
             <button id="restartBtn">다시 시작</button>
         </div>
     </div>
 </div>
 
-<div id="hearts">❤️❤️❤️</div>
-<div id="score">점수 : 0</div>
-<div id="goldText">골드 : 0 / 100</div>
+<script>
+let username = localStorage.getItem("poop_username");
+
+if(!username){
+    while(true){
+        username = prompt("아이디를 입력하세요");
+        if(username === null || username.trim() === ""){
+            alert("아이디를 입력해야 합니다!");
+            continue;
+        }
+        break;
+    }
+    localStorage.setItem("poop_username", username);
+}
+</script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -158,23 +194,14 @@ const firebaseConfig = {
     messagingSenderId: "678345123179",
     appId: "1:678345123179:web:1294bd1eba12bd9e0b182e",
     measurementId: "G-W18XMHJ8CM"
-  };
+};
 
-// 키값이 비어있을 때 에러로 게임이 멈추는 것을 방지하는 안전장치
-let db = null;
-if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
-    try {
-        const app = initializeApp(firebaseConfig);
-        db = getDatabase(app);
-    } catch(e) {
-        console.error("Firebase 초기화 실패:", e);
-    }
-}
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 const game = document.getElementById("game");
 const player = document.getElementById("player");
 const startScreen = document.getElementById("startScreen");
-const scoreText = document.getElementById("score");
 const goldText = document.getElementById("goldText");
 const rankingBox = document.getElementById("rankingBox");
 const finalScore = document.getElementById("finalScore");
@@ -184,22 +211,12 @@ const todayRanking = document.getElementById("todayRanking");
 
 let gameStarted = false;
 let gameOver = false;
-let score = 0;
 let lives = 3;
 let goldCount = 0;
 let goldenMode = false;
+let startTime = 0;
 
-// 아이디 설정
-let username = localStorage.getItem("poop_username");
-if(!username){
-    username = prompt("아이디를 입력하세요");
-    if(!username || username.trim() === ""){
-        username = "익명변기" + Math.floor(Math.random()*9999);
-    }
-    localStorage.setItem("poop_username", username);
-}
-
-// 하트 업데이트
+// 하트 표시 업데이트
 function updateHearts(){
     let text = "";
     for(let i=0; i<lives; i++){
@@ -208,9 +225,8 @@ function updateHearts(){
     document.getElementById("hearts").innerText = text;
 }
 
-// 랭킹 불러오기
+// 랭킹 시스템 실시간 실현
 function loadRankings(){
-    if(!db) return; // DB 연결 안 되어 있으면 패스
     const rankingsRef = ref(db, "rankings");
     onValue(rankingsRef, (snapshot)=>{
         const data = snapshot.val();
@@ -226,7 +242,7 @@ function loadRankings(){
         allRanking.innerHTML = "";
         allSorted.forEach(r=>{
             const li = document.createElement("li");
-            li.innerText = `${r.name} - ${r.score}`;
+            li.innerText = `${r.name} - ${r.score}개`;
             allRanking.appendChild(li);
         });
 
@@ -238,35 +254,35 @@ function loadRankings(){
         todayRanking.innerHTML = "";
         todaySorted.forEach(r=>{
             const li = document.createElement("li");
-            li.innerText = `${r.name} - ${r.score}`;
+            li.innerText = `${r.name} - ${r.score}개`;
             todayRanking.appendChild(li);
         });
     });
 }
 
-// 점수 저장
+// 골드 개수 저장
 async function saveScore(){
-    if(!db) return; // DB 연결 안 되어 있으면 패스
     const today = new Date().toLocaleDateString();
     push(ref(db, "rankings"), {
         name: username,
-        score: score,
+        score: goldCount,
         date: today
     });
 }
 
-// 시작 이벤트 등록
+// 게임 시작 핸들러
 startScreen.addEventListener("click", startGame);
 startScreen.addEventListener("touchstart", startGame);
 
 function startGame(){
     if(gameStarted) return;
+    startTime = Date.now();
     gameStarted = true;
     startScreen.style.display = "none";
     spawnLoop();
 }
 
-// 마우스 이동
+// 마우스 커서 이동 제한 보정 완료
 game.addEventListener("mousemove", (e) => {
     if (!gameStarted || gameOver) return;
 
@@ -280,7 +296,7 @@ game.addEventListener("mousemove", (e) => {
     player.style.left = (currentX - 30) + "px";
 });
 
-// 터치 이동
+// 모바일 터치 이동 보정 완료
 game.addEventListener("touchmove", (e) => {
     if (!gameStarted || gameOver) return;
 
@@ -295,22 +311,21 @@ game.addEventListener("touchmove", (e) => {
     player.style.left = (currentX - 30) + "px";
 });
 
-// 똥 생성 (속도 대폭 상향)
+// 똥 생성
 function createPoop(){
     const poop = document.createElement("div");
     poop.classList.add("item");
 
     if(goldenMode){
-        poop.innerText = "💩✨";
+        poop.innerHTML = `<img src="goldenpoop.png" width="40" height="40">`;
     }else{
-        poop.innerText = "💩";
+        poop.innerHTML = `<img src="poop.png" width="40" height="40">`;
     }
-
-    let x = Math.random() * (window.innerWidth - 40);
-    let y = -50;
     
-    // ★ 기존 기본속도 (3 ~ 6) -> 변경된 속도 (7 ~ 13)로 대폭 상향!
-    let speed = 7 + Math.random() * 6; 
+    let x = Math.random() * (game.offsetWidth - 40);
+    let y = -50;
+    const elapsed = (Date.now() - startTime) / 1000;
+    let speed = 7 + (elapsed * 0.1) + Math.random() * 6;
 
     poop.style.left = x + "px";
     poop.style.top = y + "px";
@@ -339,13 +354,13 @@ function createPoop(){
                 gameOver = true;
                 saveScore();
                 loadRankings();
-                finalScore.innerHTML = `<h3>${username}</h3><h2>점수 : ${score}</h2>`;
+                finalScore.innerHTML = `<h3>${username}</h3><h2>골드 개수 : ${goldCount}개</h2>`;
                 rankingBox.style.display = "block";
             }
             return;
         }
 
-        if(y > window.innerHeight){
+        if(y > game.offsetHeight){
             poop.remove();
             return;
         }
@@ -355,17 +370,16 @@ function createPoop(){
     fall();
 }
 
-// 골드 생성 (속도 상향)
+// 골드 생성
 function createGold(){
     const gold = document.createElement("div");
     gold.classList.add("item");
-    gold.innerText = "🪙";
+    gold.innerHTML = `<img src="gold.png" width="40" height="40">`;
 
-    let x = Math.random() * (window.innerWidth - 40);
+    let x = Math.random() * (game.offsetWidth - 40);
     let y = -50;
-    
-    // ★ 기존 속도 4 -> 8로 상향하여 스릴을 더했습니다.
-    let speed = 8; 
+    const elapsed = (Date.now() - startTime) / 1000;
+    let speed = 7 + (elapsed * 0.1) + Math.random() * 6;
 
     gold.style.left = x + "px";
     gold.style.top = y + "px";
@@ -388,9 +402,7 @@ function createGold(){
         ){
             gold.remove();
             goldCount++;
-            score += 10;
 
-            scoreText.innerText = "점수 : " + score;
             goldText.innerText = "골드 : " + goldCount + " / 100";
 
             if(goldCount >= 100){
@@ -400,7 +412,7 @@ function createGold(){
             return;
         }
 
-        if(y > window.innerHeight){
+         if(y > game.offsetHeight){
             gold.remove();
             return;
         }
@@ -410,7 +422,7 @@ function createGold(){
     fall();
 }
 
-// 루프 실행 (점수가 오를수록 더 빽빽하게 쏟아집니다)
+// 오브젝트 스폰 루프
 function spawnLoop(){
     if(gameOver) return;
 
@@ -421,8 +433,7 @@ function spawnLoop(){
         createGold();
     }
 
-    // 기본 생성 딜레이도 점수에 따라 더 빠르게 좁혀집니다.
-    let delay = 600 - score * 0.25;
+    let delay = 600 - (goldCount * 10) * 0.25; 
     if(delay < 180){
         delay = 180;
     }
@@ -430,7 +441,7 @@ function spawnLoop(){
     setTimeout(spawnLoop, delay);
 }
 
-// 다시 시작 버튼
+// 재시작 단추
 restartBtn.addEventListener("click", ()=>{
     location.reload();
 });
